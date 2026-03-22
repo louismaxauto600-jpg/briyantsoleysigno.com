@@ -1,81 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Briyant Solèy Signo 1815</title>
+  <meta name="description" content="Official website of Briyant Solèy Signo 1815" />
 
-  <!-- SEO -->
-  <meta name="description" content="Official website of Briyant Solèy Signo 1815 — Unity, Culture, Discipline.">
-
-  <!-- STYLE -->
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, black, #ff8c00);
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(to bottom, #000000, #ff8c00);
       color: white;
-      text-align: center;
+      min-height: 100vh;
     }
 
     header {
-      padding: 40px 20px;
+      background: rgba(0, 0, 0, 0.65);
+      padding: 20px 30px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(6px);
     }
 
-    h1 {
-      font-size: 3em;
-      margin: 0;
-      color: #ff8c00;
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
     }
 
-    p {
-      font-size: 1.2em;
-      max-width: 700px;
-      margin: 20px auto;
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
-    nav {
-      margin-top: 30px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .brand img {
+      width: 75px;
+      height: 75px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #ff8c00;
+      background: #111;
+    }
+
+    .brand-text h1 {
+      font-size: 1.6rem;
+      color: #ffb347;
+      margin-bottom: 4px;
+    }
+
+    .brand-text p {
+      font-size: 0.95rem;
+      color: #f3f3f3;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
     }
 
     nav a {
       color: white;
       text-decoration: none;
-      margin: 0 15px;
       font-weight: bold;
-      font-size: 1.1em;
+      transition: 0.3s ease;
     }
 
     nav a:hover {
-      color: #ff8c00;
+      color: #ffb347;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 80px 20px 50px;
+    }
+
+    .hero img {
+      width: 180px;
+      max-width: 90%;
+      border-radius: 20px;
+      border: 4px solid #ff8c00;
+      box-shadow: 0 0 25px rgba(0,0,0,0.4);
+      margin-bottom: 25px;
+      background: #111;
+    }
+
+    .hero h2 {
+      font-size: 2.6rem;
+      margin-bottom: 15px;
+      color: #ffb347;
+    }
+
+    .hero p {
+      max-width: 850px;
+      margin: 0 auto 20px;
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+
+    .hero .btn {
+      display: inline-block;
+      margin-top: 15px;
+      background: black;
+      color: #ffb347;
+      border: 2px solid #ff8c00;
+      padding: 12px 24px;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+
+    .hero .btn:hover {
+      background: #ff8c00;
+      color: black;
+    }
+
+    .sections {
+      padding: 30px 20px 70px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(255, 179, 71, 0.35);
+      border-radius: 18px;
+      padding: 25px 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    .card h3 {
+      color: #ffb347;
+      margin-bottom: 12px;
+      font-size: 1.3rem;
+    }
+
+    .card p {
+      line-height: 1.6;
+      font-size: 1rem;
     }
 
     footer {
-      margin-top: 80px;
-      padding: 20px;
-      background: rgba(0,0,0,0.6);
+      text-align: center;
+      padding: 25px 15px;
+      background: rgba(0, 0, 0, 0.75);
+      font-size: 0.95rem;
+      color: #ddd;
+    }
+
+    @media (max-width: 768px) {
+      .topbar {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      nav ul {
+        justify-content: center;
+      }
+
+      .hero h2 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .brand-text h1 {
+        font-size: 1.3rem;
+      }
     }
   </style>
 </head>
-
 <body>
 
   <header>
-    <h1>BSS 1815</h1>
-    <p>Briyant Solèy Signo 1815 — Yon mouvman, yon vizyon, yon limyè ki pap janm etenn.</p>
+    <div class="container topbar">
+      <div class="brand">
+        <img src="bss-1815.jpg" alt="BSS 1815 Logo">
+        <div class="brand-text">
+          <h1>Briyant Solèy Signo 1815</h1>
+          <p>BSS 1815 Official Website</p>
+        </div>
+      </div>
 
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">History</a>
-      <a href="#">Leadership</a>
-      <a href="#">Gallery</a>
-      <a href="#">Contact</a>
-    </nav>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">History</a></li>
+          <li><a href="#">Leadership</a></li>
+          <li><a href="#">Gallery</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
+  <section class="hero">
+    <img src="bss-1815.jpg" alt="BSS 1815 Main Logo">
+    <h2>Welcome to BSS 1815</h2>
+    <p>
+      Briyant Solèy Signo 1815 se yon mouvman, yon vizyon, yon limyè ki pap janm etenn.
+      Platfòm sa a reprezante inite, disiplin, kilti, ak fyète.
+    </p>
+    <a href="#" class="btn">Explore More</a>
+  </section>
+
+  <section class="sections">
+    <div class="container">
+      <div class="grid">
+        <div class="card">
+          <h3>History</h3>
+          <p>
+            Dekouvri istwa BSS 1815, orijin li, valè li yo, ak chemen li nan kominote a.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Leadership</h3>
+          <p>
+            Rankontre dirijan yo ak moun kle ki pote vizyon ak avansman BSS 1815.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Gallery</h3>
+          <p>
+            Gade foto, videyo, ak moman espesyal ki make prezans ak fòs BSS 1815.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Contact</h3>
+          <p>
+            Rete konekte ak BSS 1815 pou enfòmasyon, kolaborasyon, oswa aktivite ofisyèl yo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer>
-    <p>© 2026 Briyant Solèy Signo 1815 — All Rights Reserved</p>
+    © 2026 Briyant Solèy Signo 1815 — All Rights Reserved
   </footer>
 
 </body>
