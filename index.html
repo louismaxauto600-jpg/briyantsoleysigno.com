@@ -1,49 +1,6 @@
 <!DOCTYPE html>
 <html lang="ht">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BSS 1815 — Sit Ofisyèl</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-  <!-- HEADER -->
-  <header>
-    <img src="bss-1815.png" class="logo" alt="BSS 1815 Logo">
-    <h1>BSS 1815</h1>
-    <p>Rara Ofisyèl — Tradisyon • Enèji • Idantite</p>
-
-    <!-- NAVIGATION -->
-    <nav>
-      <a href="index.html">Akèy</a>
-      <a href="dirijan.html">Dirijan</a>
-      <a href="manm.html">Manm</a>
-      <a href="istwa.html">Istwa</a>
-      <a href="kontak.html">Kontak</a>
-    </nav>
-  </header>
-
-  <!-- MAIN SECTION -->
-  <main>
-    <p>
-      BSS 1815 se yon ekip ki pote flanm tradisyon an vivan.  
-      Nou mache ak disiplin, respè, ak fyète pou kominote nou an.  
-      Chak aparisyon se yon deklarasyon: **Idantite, Enèji, Inite.**
-    </p>
-  </main>
-
-  <!-- FOOTER -->
-  <footer>
-    © 2026 BSS 1815 — Tout dwa rezève.
-  </footer>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Briyant Solèy Signo 1815</title>
@@ -112,6 +69,13 @@
       color: #f3f3f3;
     }
 
+    .right-tools {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
     nav ul {
       list-style: none;
       display: flex;
@@ -128,6 +92,28 @@
 
     nav a:hover {
       color: #ffb347;
+    }
+
+    .lang-switcher {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .lang-switcher button {
+      background: #111;
+      color: white;
+      border: 1px solid #ff8c00;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .lang-switcher button:hover,
+    .lang-switcher button.active {
+      background: #ff8c00;
+      color: black;
     }
 
     .hero {
@@ -211,6 +197,7 @@
       background: rgba(0, 0, 0, 0.75);
       font-size: 0.95rem;
       color: #ddd;
+      margin-top: 30px;
     }
 
     @media (max-width: 768px) {
@@ -218,6 +205,11 @@
         flex-direction: column;
         align-items: center;
         text-align: center;
+      }
+
+      .right-tools {
+        flex-direction: column;
+        justify-content: center;
       }
 
       nav ul {
@@ -238,7 +230,6 @@
     }
   </style>
 </head>
-
 <body>
 
   <header>
@@ -247,61 +238,170 @@
         <img src="bss-1815.png" alt="BSS 1815 Logo">
         <div class="brand-text">
           <h1>Briyant Solèy Signo 1815</h1>
-          <p>BSS 1815 Official Website</p>
+          <p id="brand-subtitle">BSS 1815 Official Website</p>
         </div>
       </div>
 
-      <nav>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">History</a></li>
-          <li><a href="#">Leadership</a></li>
-          <li><a href="#">Gallery</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </nav>
+      <div class="right-tools">
+        <nav>
+          <ul>
+            <li><a href="#" id="nav-home">Home</a></li>
+            <li><a href="#" id="nav-history">History</a></li>
+            <li><a href="#" id="nav-leadership">Leadership</a></li>
+            <li><a href="#" id="nav-gallery">Gallery</a></li>
+            <li><a href="#" id="nav-contact">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="lang-switcher">
+          <button onclick="setLanguage('ht')" id="btn-ht" class="active">KREYÒL</button>
+          <button onclick="setLanguage('en')" id="btn-en">ENGLISH</button>
+          <button onclick="setLanguage('fr')" id="btn-fr">FRANÇAIS</button>
+        </div>
+      </div>
     </div>
   </header>
 
   <section class="hero">
     <img src="bss-1815.png" alt="BSS 1815 Main Logo">
-    <h2>Welcome to BSS 1815</h2>
-    <p>
+    <h2 id="hero-title">Byenveni nan BSS 1815</h2>
+    <p id="hero-text">
       Briyant Solèy Signo 1815 se yon mouvman, yon vizyon, yon limyè ki pap janm etenn.
       Platfòm sa a reprezante inite, disiplin, kilti, ak fyète.
     </p>
-    <a href="#" class="btn">Explore More</a>
+    <a href="#" class="btn" id="hero-btn">Eksplore Plis</a>
   </section>
 
   <section class="sections">
     <div class="container">
       <div class="grid">
         <div class="card">
-          <h3>History</h3>
-          <p>Dekouvri istwa BSS 1815, orijin li, valè li yo, ak chemen li nan kominote a.</p>
+          <h3 id="card1-title">Istwa</h3>
+          <p id="card1-text">
+            Dekouvri istwa BSS 1815, orijin li, valè li yo, ak chemen li nan kominote a.
+          </p>
         </div>
 
         <div class="card">
-          <h3>Leadership</h3>
-          <p>Rankontre dirijan yo ak moun kle ki pote vizyon ak avansman BSS 1815.</p>
+          <h3 id="card2-title">Lidèchip</h3>
+          <p id="card2-text">
+            Rankontre dirijan yo ak moun kle ki pote vizyon ak avansman BSS 1815.
+          </p>
         </div>
 
         <div class="card">
-          <h3>Gallery</h3>
-          <p>Gade foto, videyo, ak moman espesyal ki make prezans ak fòs BSS 1815.</p>
+          <h3 id="card3-title">Galri</h3>
+          <p id="card3-text">
+            Gade foto, videyo, ak moman espesyal ki make prezans ak fòs BSS 1815.
+          </p>
         </div>
 
         <div class="card">
-          <h3>Contact</h3>
-          <p>Rete konekte ak BSS 1815 pou enfòmasyon, kolaborasyon, oswa aktivite ofisyèl yo.</p>
+          <h3 id="card4-title">Kontak</h3>
+          <p id="card4-text">
+            Rete konekte ak BSS 1815 pou enfòmasyon, kolaborasyon, oswa aktivite ofisyèl yo.
+          </p>
         </div>
       </div>
     </div>
   </section>
 
-  <footer>
-    © 2026 Briyant Solèy Signo 1815 — All Rights Reserved
+  <footer id="footer-text">
+    © 2026 Briyant Solèy Signo 1815 — Tout Dwa Rezève
   </footer>
+
+  <script>
+    const translations = {
+      ht: {
+        brandSubtitle: "BSS 1815 Sit Ofisyèl",
+        navHome: "Akey",
+        navHistory: "Istwa",
+        navLeadership: "Lidèchip",
+        navGallery: "Galri",
+        navContact: "Kontak",
+        heroTitle: "Byenveni nan BSS 1815",
+        heroText: "Briyant Solèy Signo 1815 se yon mouvman, yon vizyon, yon limyè ki pap janm etenn. Platfòm sa a reprezante inite, disiplin, kilti, ak fyète.",
+        heroBtn: "Eksplore Plis",
+        card1Title: "Istwa",
+        card1Text: "Dekouvri istwa BSS 1815, orijin li, valè li yo, ak chemen li nan kominote a.",
+        card2Title: "Lidèchip",
+        card2Text: "Rankontre dirijan yo ak moun kle ki pote vizyon ak avansman BSS 1815.",
+        card3Title: "Galri",
+        card3Text: "Gade foto, videyo, ak moman espesyal ki make prezans ak fòs BSS 1815.",
+        card4Title: "Kontak",
+        card4Text: "Rete konekte ak BSS 1815 pou enfòmasyon, kolaborasyon, oswa aktivite ofisyèl yo.",
+        footerText: "© 2026 Briyant Solèy Signo 1815 — Tout Dwa Rezève"
+      },
+      en: {
+        brandSubtitle: "BSS 1815 Official Website",
+        navHome: "Home",
+        navHistory: "History",
+        navLeadership: "Leadership",
+        navGallery: "Gallery",
+        navContact: "Contact",
+        heroTitle: "Welcome to BSS 1815",
+        heroText: "Briyant Solèy Signo 1815 is a movement, a vision, and a light that will never go out. This platform represents unity, discipline, culture, and pride.",
+        heroBtn: "Explore More",
+        card1Title: "History",
+        card1Text: "Discover the history of BSS 1815, its origin, values, and path within the community.",
+        card2Title: "Leadership",
+        card2Text: "Meet the leaders and key individuals who carry the vision and progress of BSS 1815.",
+        card3Title: "Gallery",
+        card3Text: "View photos, videos, and special moments that reflect the presence and strength of BSS 1815.",
+        card4Title: "Contact",
+        card4Text: "Stay connected with BSS 1815 for information, collaboration, or official activities.",
+        footerText: "© 2026 Briyant Solèy Signo 1815 — All Rights Reserved"
+      },
+      fr: {
+        brandSubtitle: "Site Officiel de BSS 1815",
+        navHome: "Accueil",
+        navHistory: "Histoire",
+        navLeadership: "Direction",
+        navGallery: "Galerie",
+        navContact: "Contact",
+        heroTitle: "Bienvenue à BSS 1815",
+        heroText: "Briyant Solèy Signo 1815 est un mouvement, une vision et une lumière qui ne s’éteindra jamais. Cette plateforme représente l’unité, la discipline, la culture et la fierté.",
+        heroBtn: "Explorer Plus",
+        card1Title: "Histoire",
+        card1Text: "Découvrez l’histoire de BSS 1815, son origine, ses valeurs et son parcours dans la communauté.",
+        card2Title: "Direction",
+        card2Text: "Rencontrez les dirigeants et les personnes clés qui portent la vision et l’avancement de BSS 1815.",
+        card3Title: "Galerie",
+        card3Text: "Regardez les photos, vidéos et moments spéciaux qui marquent la présence et la force de BSS 1815.",
+        card4Title: "Contact",
+        card4Text: "Restez connectés avec BSS 1815 pour des informations, des collaborations ou des activités officielles.",
+        footerText: "© 2026 Briyant Solèy Signo 1815 — Tous Droits Réservés"
+      }
+    };
+
+    function setLanguage(lang) {
+      document.getElementById("brand-subtitle").textContent = translations[lang].brandSubtitle;
+      document.getElementById("nav-home").textContent = translations[lang].navHome;
+      document.getElementById("nav-history").textContent = translations[lang].navHistory;
+      document.getElementById("nav-leadership").textContent = translations[lang].navLeadership;
+      document.getElementById("nav-gallery").textContent = translations[lang].navGallery;
+      document.getElementById("nav-contact").textContent = translations[lang].navContact;
+      document.getElementById("hero-title").textContent = translations[lang].heroTitle;
+      document.getElementById("hero-text").textContent = translations[lang].heroText;
+      document.getElementById("hero-btn").textContent = translations[lang].heroBtn;
+      document.getElementById("card1-title").textContent = translations[lang].card1Title;
+      document.getElementById("card1-text").textContent = translations[lang].card1Text;
+      document.getElementById("card2-title").textContent = translations[lang].card2Title;
+      document.getElementById("card2-text").textContent = translations[lang].card2Text;
+      document.getElementById("card3-title").textContent = translations[lang].card3Title;
+      document.getElementById("card3-text").textContent = translations[lang].card3Text;
+      document.getElementById("card4-title").textContent = translations[lang].card4Title;
+      document.getElementById("card4-text").textContent = translations[lang].card4Text;
+      document.getElementById("footer-text").textContent = translations[lang].footerText;
+
+      document.getElementById("btn-ht").classList.remove("active");
+      document.getElementById("btn-en").classList.remove("active");
+      document.getElementById("btn-fr").classList.remove("active");
+      document.getElementById("btn-" + lang).classList.add("active");
+
+      document.documentElement.lang = lang;
+    }
+  </script>
 
 </body>
 </html>
