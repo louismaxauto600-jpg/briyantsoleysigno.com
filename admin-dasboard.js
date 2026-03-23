@@ -1,64 +1,35 @@
-// ------------------------------------------------------
-// IMPORT FIREBASE MODULES
-// ------------------------------------------------------
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import {
   getFirestore,
   collection,
   getDocs,
   doc,
-  setDoc
+  setDoc,
+  deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
-
-
-// ------------------------------------------------------
-// FIREBASE CONFIG
-// ------------------------------------------------------
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
   authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com"
+  projectId: "YOUR_PROJECT_ID"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const storage = getStorage(app);
 
-
-// ------------------------------------------------------
-// GLOBAL VARIABLES
-// ------------------------------------------------------
 let allMusicians = [];
 let currentFilterSection = "ALL";
 let currentSearch = "";
 
-
-// ------------------------------------------------------
-// LOAD MIZISYEN YO
-// ------------------------------------------------------
+// CHARGE DONE YO
 async function loadMusicians() {
   const snap = await getDocs(collection(db, "musicians"));
   allMusicians = [];
-
-  snap.forEach(d => {
-    allMusicians.push({ id: d.id, ...d.data() });
-  });
-
+  snap.forEach(d => allMusicians.push({ id: d.id, ...d.data() }));
   applyFilters();
 }
 
-
-// ------------------------------------------------------
-// APLIKE FILTRE + SEARCH
-// ------------------------------------------------------
+// APLIKE FILT + CHÈCHE
 function applyFilters() {
   let list = [...allMusicians];
 
@@ -74,10 +45,7 @@ function applyFilters() {
   displayMusicians(list);
 }
 
-
-// ------------------------------------------------------
 // AFFICHE TAB LA + TOTAL YO
-// ------------------------------------------------------
 function displayMusicians(list) {
   const tbody = document.querySelector("#musicians-table tbody");
   const totalContractsEl = document.getElementById("total-contracts");
@@ -104,7 +72,10 @@ function displayMusicians(list) {
       <td>${(m.paid || 0).toLocaleString("fr-FR")} Gdes</td>
       <td>${(m.balance || 0).toLocaleString("fr-FR")} Gdes</td>
       <td>${m.photoUrl ? `<a href="${m.photoUrl}" target="_blank" style="color:#FF8C42;">Gade</a>` : "-"}</td>
-      <td><button class="edit-btn" data-id="${m.id}" style="padding:4px 10px;">Edit</button></td>
+      <td>
+        <button class="edit-btn" data-id="${m.id}" style="padding:2px 8px; font-size:12px;">Edit</button>
+        <button class="delete-btn" data-id="${m.id}" style="padding:2px 8px; font-size:12px; background:#900; color:#fff;">Delete</button>
+      </td>
     `;
     tbody.appendChild(tr);
   });
@@ -114,10 +85,7 @@ function displayMusicians(list) {
   totalBalanceEl.textContent = `Balans: ${totalBalance.toLocaleString("fr-FR")} Gdes`;
 }
 
-
-// ------------------------------------------------------
-// FILTRE PA SEKSYON
-// ------------------------------------------------------
+// FILTRE + EDIT + DELETE
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("filter-btn")) {
     currentFilterSection = e.target.dataset.section;
@@ -129,24 +97,24 @@ document.addEventListener("click", (e) => {
     const m = allMusicians.find(x => x.id === id);
     if (m) fillForm(m);
   }
+
+  if (e.target.classList.contains("delete-btn")) {
+    const id = e.target.dataset.id;
+    if (confirm("Ou vle efase mizisyen sa a?")) {
+      deleteMusician(id);
+    }
+  }
 });
 
-
-// ------------------------------------------------------
-// SEARCH
-// ------------------------------------------------------
+// CHÈCHE
 document.getElementById("search-input").addEventListener("input", (e) => {
   currentSearch = e.target.value;
   applyFilters();
 });
 
-
-// ------------------------------------------------------
 // RANPLI FÒM LAN POU EDIT
-// ------------------------------------------------------
 function fillForm(m) {
   const form = document.getElementById("musician-form");
-
   form.id.value = m.id || "";
   form.name.value = m.name || "";
   form.instrument.value = m.instrument || "";
@@ -158,21 +126,23 @@ function fillForm(m) {
   form.photoUrl.value = m.photoUrl || "";
 }
 
-
-// ------------------------------------------------------
-// UPLOAD FOTO NAN STORAGE
-// ------------------------------------------------------
-async function uploadPhoto(file, id) {
-  const storageRef = ref(storage, `musicians/${id}.jpg`);
-  await uploadBytes(storageRef, file);
-  const url = await getDownloadURL(storageRef);
-  return url;
+// DELETE MIZISYEN
+async function deleteMusician(id) {
+  try {
+    await deleteDoc(doc(db, "musicians", id));
+    alert("Mizisyen efase ak siksè.");
+    loadMusicians();
+  } catch (e) {
+    alert("Erè pandan efasman.");
+  }
 }
 
+// REYAJISTE FÒM LAN
+document.getElementById("reset-form").addEventListener("click", () => {
+  document.getElementById("musician-form").reset();
+});
 
-// ------------------------------------------------------
-// SUBMIT FÒM LAN (AJOUTE + EDIT + UPLOAD FOTO)
-// ------------------------------------------------------
+// SUBMIT FÒM (AJOUTE / EDIT)
 document.getElementById("musician-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const form = e.target;
@@ -183,13 +153,6 @@ document.getElementById("musician-form").addEventListener("submit", async (e) =>
     return;
   }
 
-  let photoUrl = form.photoUrl.value.trim();
-  const file = document.getElementById("photo-file").files[0];
-
-  if (file) {
-    photoUrl = await uploadPhoto(file, id);
-  }
-
   const data = {
     name: form.name.value.trim(),
     instrument: form.instrument.value.trim(),
@@ -198,25 +161,12 @@ document.getElementById("musician-form").addEventListener("submit", async (e) =>
     paid: Number(form.paid.value || 0),
     balance: Number(form.balance.value || 0),
     season: form.season.value.trim() || "2026",
-    photoUrl
+    photoUrl: form.photoUrl.value.trim() || ""
   };
 
   await setDoc(doc(db, "musicians", id), data, { merge: true });
-
   await loadMusicians();
-  alert("Mizisyen sove ak foto BSS STYLE ✅");
+  alert("Mizisyen sove BSS STYLE ✅");
 });
 
-
-// ------------------------------------------------------
-// REYAJISTE FÒM LAN
-// ------------------------------------------------------
-document.getElementById("reset-form").addEventListener("click", () => {
-  document.getElementById("musician-form").reset();
-});
-
-
-// ------------------------------------------------------
-// KÒMANSE DASHBOARD LA
-// ------------------------------------------------------
 loadMusicians().catch(console.error);
