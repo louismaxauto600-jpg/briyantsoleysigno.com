@@ -1,453 +1,169 @@
-ko<head>
-  <meta charset="UTF-8">
-  <title>BSS 1815 – Admin Mizisyen</title>
-
-  <!-- STYLE YO ALE ANWO -->
-  <style>
-    body { background:#111; color:white; font-family:Arial; padding:20px; }
-    table { width:100%; border-collapse:collapse; margin-top:20px; }
-    th, td { border:1px solid #333; padding:8px; }
-    th { background:#FF8C42; color:black; }
-    .filter-btn { margin-right:5px; padding:5px 10px; background:#FF8C42; border:none; cursor:pointer; }
-    #musician-form input { width:100%; padding:6px; margin-bottom:10px; }
-  </style>
-</head>update contact section<!DOCTYPE html>
-<html lang="ht">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Briyant Solèy Signo 1815</title>
-  <meta name="description" content="Official website of Briyant Solèy Signo 1815" />
-update bss live
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BSS 1815 — Mizisyen Ofisyèl</title>
 
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(to bottom, #000000, #ff8c00);
-      color: white;
-      min-height: 100vh;
-    }
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(180deg,#000 0%,#111 60%,#ff9f43 100%);
+  color:white;
+}
 
-    header {
-      background: rgba(0, 0, 0, 0.65);
-      padding: 20px 30px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      backdrop-filter: blur(6px);
-    }
+header{
+  background:black;
+  padding:25px;
+  text-align:center;
+  border-bottom:3px solid #ff9f43;
+}
 
-    .container {
-      width: 90%;
-      max-width: 1200px;
-      margin: auto;
-    }
+header h1{
+  margin:0;
+  color:#ffb066;
+  font-size:2.2rem;
+}
 
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
+header p{
+  margin:8px 0 0;
+  opacity:0.85;
+}
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:40px 20px;
+}
 
-    .brand img {
-      width: 75px;
-      height: 75px;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 3px solid #ff8c00;
-      background: #111;
-    }
+.section{
+  background:rgba(0,0,0,0.65);
+  padding:22px;
+  margin-bottom:26px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.1);
+}
 
-    .brand-text h1 {
-      font-size: 1.6rem;
-      color: #ffb347;
-      margin-bottom: 4px;
-    }
+.section h2{
+  color:#ffb066;
+  margin-top:0;
+}
 
-    .brand-text p {
-      font-size: 0.95rem;
-      color: #f3f3f3;
-    }
+ul{
+  padding-left:22px;
+}
 
-    .right-tools {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
+li{
+  margin:6px 0;
+}
 
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
+footer{
+  background:black;
+  text-align:center;
+  padding:18px;
+  border-top:3px solid #ff9f43;
+  font-size:14px;
+}
+</style>
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.3s ease;
-    }
-
-    nav a:hover {
-      color: #ffb347;
-    }
-
-    .lang-switcher {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .lang-switcher button {
-      background: #111;
-      color: white;
-      border: 1px solid #ff8c00;
-      padding: 8px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .lang-switcher button:hover,
-    .lang-switcher button.active {
-      background: #ff8c00;
-      color: black;
-    }
-
-    .hero {
-      text-align: center;
-      padding: 80px 20px 50px;
-    }
-
-    .hero img {
-      width: 180px;
-      max-width: 90%;
-      border-radius: 20px;
-      border: 4px solid #ff8c00;
-      box-shadow: 0 0 25px rgba(0,0,0,0.4);
-      margin-bottom: 25px;
-      background: #111;
-    }
-
-    .hero h2 {
-      font-size: 2.6rem;
-      margin-bottom: 15px;
-      color: #ffb347;
-    }
-
-    .hero p {
-      max-width: 850px;
-      margin: 0 auto 20px;
-      font-size: 1.1rem;
-      line-height: 1.7;
-    }
-
-    .hero .btn {
-      display: inline-block;
-      margin-top: 15px;
-      background: black;
-      color: #ffb347;
-      border: 2px solid #ff8c00;
-      padding: 12px 24px;
-      text-decoration: none;
-      border-radius: 10px;
-      font-weight: bold;
-      transition: 0.3s ease;
-    }
-
-    .hero .btn:hover {
-      background: #ff8c00;
-      color: black;
-    }
-
-    .sections {
-      padding: 30px 20px 70px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background: rgba(0, 0, 0, 0.55);
-      border: 1px solid rgba(255, 179, 71, 0.35);
-      border-radius: 18px;
-      padding: 25px 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-    }
-
-    .card h3 {
-      color: #ffb347;
-      margin-bottom: 12px;
-      font-size: 1.3rem;
-    }
-
-    .card p {
-      line-height: 1.6;
-      font-size: 1rem;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px 15px;
-      background: rgba(0, 0, 0, 0.75);
-      font-size: 0.95rem;
-      color: #ddd;
-      margin-top: 30px;
-    }
-
-    @media (max-width: 768px) {
-      .topbar {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-      }
-
-      .right-tools {
-        flex-direction: column;
-        justify-content: center;
-      }
-
-      nav ul {
-        justify-content: center;
-      }
-
-      .hero h2 {
-        font-size: 2rem;
-      }
-
-      .hero p {
-        font-size: 1rem;
-      }
-
-      .brand-text h1 {
-        font-size: 1.3rem;
-      }
-    }
-  </style>
 </head>
+
 <body>
 
-  <header>
-    <div class="container topbar">
-      <div class="brand">
-        <img src="bss-1815.png" alt="BSS 1815 Logo">
-        <div class="brand-text">
-          <h1>Briyant Solèy Signo 1815</h1>
-          <p id="brand-subtitle">BSS 1815 Official Website</p>
-        </div>
-      </div>
+<header>
+  <h1>BRIYANT SOLEY SIGNO 1815</h1>
+  <p>Mizisyen Ofisyèl — Rara 2026</p>
+</header>
 
-      <div class="right-tools">
-        <nav>
-          <ul>
-            <li><a href="#" id="nav-home">Home</a></li>
-            <li><a href="#" id="nav-history">History</a></li>
-            <li><a href="#" id="nav-leadership">Leadership</a></li>
-            <li><a href="#" id="nav-gallery">Gallery</a></li>
-            <li><a href="#" id="nav-contact">Contact</a></li>
-          </ul>
-        </nav>
+<div class="container">
 
-        <div class="lang-switcher">
-          <button onclick="setLanguage('ht')" id="btn-ht" class="active">KREYÒL</button>
-          <button onclick="setLanguage('en')" id="btn-en">ENGLISH</button>
-          <button onclick="setLanguage('fr')" id="btn-fr">FRANÇAIS</button>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <section class="hero">
-    <img src="bss-1815.png" alt="BSS 1815 Main Logo">
-    <h2 id="hero-title">Byenveni nan BSS 1815</h2>
-    <p id="hero-text">
-      Briyant Solèy Signo 1815 se yon mouvman, yon vizyon, yon limyè ki pap janm etenn.
-      Platfòm sa a reprezante inite, disiplin, kilti, ak fyète.
-    </p>
-    <a href="#" class="btn" id="hero-btn">Eksplore Plis</a>
-  </section>
-
-  <section class="sections">
-    <div class="container">
-      <div class="grid">
-        <div class="card">
-          <h3 id="card1-title">Istwa</h3>
-          <p id="card1-text">
-            Dekouvri istwa BSS 1815, orijin li, valè li yo, ak chemen li nan kominote a.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3 id="card2-title">Lidèchip</h3>
-          <p id="card2-text">
-            Rankontre dirijan yo ak moun kle ki pote vizyon ak avansman BSS 1815.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3 id="card3-title">Galri</h3>
-          <p id="card3-text">
-            Gade foto, videyo, ak moman espesyal ki make prezans ak fòs BSS 1815.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3 id="card4-title">Kontak</h3>
-          <p id="card4-text">
-            Rete konekte ak BSS 1815 pou enfòmasyon, kolaborasyon, oswa aktivite ofisyèl yo.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer id="footer-text">
-    © 2026 Briyant Solèy Signo 1815 — Tout Dwa Rezève
-  </footer>
-
-  <script>
-    const translations = {
-      ht: {
-        brandSubtitle: "BSS 1815 Sit Ofisyèl",
-        navHome: "Akey",
-        navHistory: "Istwa",
-        navLeadership: "Lidèchip",
-        navGallery: "Galri",
-        navContact: "Kontak",
-        heroTitle: "Byenveni nan BSS 1815",
-        heroText: "Briyant Solèy Signo 1815 se yon mouvman, yon vizyon, yon limyè ki pap janm etenn. Platfòm sa a reprezante inite, disiplin, kilti, ak fyète.",
-        heroBtn: "Eksplore Plis",
-        card1Title: "Istwa",
-        card1Text: "Dekouvri istwa BSS 1815, orijin li, valè li yo, ak chemen li nan kominote a.",
-        card2Title: "Lidèchip",
-        card2Text: "Rankontre dirijan yo ak moun kle ki pote vizyon ak avansman BSS 1815.",
-        card3Title: "Galri",
-        card3Text: "Gade foto, videyo, ak moman espesyal ki make prezans ak fòs BSS 1815.",
-        card4Title: "Kontak",
-        card4Text: "Rete konekte ak BSS 1815 pou enfòmasyon, kolaborasyon, oswa aktivite ofisyèl yo.",
-        footerText: "© 2026 Briyant Solèy Signo 1815 — Tout Dwa Rezève"
-      },
-      en: {
-        brandSubtitle: "BSS 1815 Official Website",
-        navHome: "Home",
-        navHistory: "History",
-        navLeadership: "Leadership",
-        navGallery: "Gallery",
-        navContact: "Contact",
-        heroTitle: "Welcome to BSS 1815",
-        heroText: "Briyant Solèy Signo 1815 is a movement, a vision, and a light that will never go out. This platform represents unity, discipline, culture, and pride.",
-        heroBtn: "Explore More",
-        card1Title: "History",
-        card1Text: "Discover the history of BSS 1815, its origin, values, and path within the community.",
-        card2Title: "Leadership",
-        card2Text: "Meet the leaders and key individuals who carry the vision and progress of BSS 1815.",
-        card3Title: "Gallery",
-        card3Text: "View photos, videos, and special moments that reflect the presence and strength of BSS 1815.",
-        card4Title: "Contact",
-        card4Text: "Stay connected with BSS 1815 for information, collaboration, or official activities.",
-        footerText: "© 2026 Briyant Solèy Signo 1815 — All Rights Reserved"
-      },
-      fr: {
-        brandSubtitle: "Site Officiel de BSS 1815",
-        navHome: "Accueil",
-        navHistory: "Histoire",
-        navLeadership: "Direction",
-        navGallery: "Galerie",
-        navContact: "Contact",
-        heroTitle: "Bienvenue à BSS 1815",
-        heroText: "Briyant Solèy Signo 1815 est un mouvement, une vision et une lumière qui ne s’éteindra jamais. Cette plateforme représente l’unité, la discipline, la culture et la fierté.",
-        heroBtn: "Explorer Plus",
-        card1Title: "Histoire",
-        card1Text: "Découvrez l’histoire de BSS 1815, son origine, ses valeurs et son parcours dans la communauté.",
-        card2Title: "Direction",
-        card2Text: "Rencontrez les dirigeants et les personnes clés qui portent la vision et l’avancement de BSS 1815.",
-        card3Title: "Galerie",
-        card3Text: "Regardez les photos, vidéos et moments spéciaux qui marquent la présence et la force de BSS 1815.",
-        card4Title: "Contact",
-        card4Text: "Restez connectés avec BSS 1815 pour des informations, des collaborations ou des activités officielles.",
-        footerText: "© 2026 Briyant Solèy Signo 1815 — Tous Droits Réservés"
-      }
-    };
-
-    function setLanguage(lang) {
-      document.getElementById("brand-subtitle").textContent = translations[lang].brandSubtitle;
-      document.getElementById("nav-home").textContent = translations[lang].navHome;
-      document.getElementById("nav-history").textContent = translations[lang].navHistory;
-      document.getElementById("nav-leadership").textContent = translations[lang].navLeadership;
-      document.getElementById("nav-gallery").textContent = translations[lang].navGallery;
-      document.getElementById("nav-contact").textContent = translations[lang].navContact;
-      document.getElementById("hero-title").textContent = translations[lang].heroTitle;
-      document.getElementById("hero-text").textContent = translations[lang].heroText;
-      document.getElementById("hero-btn").textContent = translations[lang].heroBtn;
-      document.getElementById("card1-title").textContent = translations[lang].card1Title;
-      document.getElementById("card1-text").textContent = translations[lang].card1Text;
-      document.getElementById("card2-title").textContent = translations[lang].card2Title;
-      document.getElementById("card2-text").textContent = translations[lang].card2Text;
-      document.getElementById("card3-title").textContent = translations[lang].card3Title;
-      document.getElementById("card3-text").textContent = translations[lang].card3Text;
-      document.getElementById("card4-title").textContent = translations[lang].card4Title;
-      document.getElementById("card4-text").textContent = translations[lang].card4Text;
-      document.getElementById("footer-text").textContent = translations[lang].footerText;
-
-      document.getElementById("btn-ht").classList.remove("active");
-      document.getElementById("btn-en").classList.remove("active");
-      document.getElementById("btn-fr").classList.remove("active");
-      document.getElementById("btn-" + lang).classList.add("active");
-
-      document.documentElement.lang = lang;
-    }
-  </script>
-</script>
-
-<!-- KOLE CONTACT SECTION LA ISIT -->
-
-<section class="bss-contact" id="contact">
-  <div class="bss-contact-container">
-
-    <h2 class="bss-title">BRIYANT SOLEY SIGNO 1815</h2>
-    <p class="bss-subtitle">Official Contact & Headquarters</p>
-
-    <div class="bss-contact-card">
-      <p>📍 6934 Coralcove Drive, Orlando, Florida 32818, USA</p>
-      <p>☎ +1 (317) 538-1150<br>☎ +1 (516) 216-8494</p>
-      <p>📧 briyantsoleysigno1815@gmail.com</p>
-      <p>🌐 www.briyantsoleysigno.com</p>
-      <p>📘 Facebook — Briyant Soley Signo 1815</p>
-      <p>🎵 TikTok — Briyant Soley Signo 1815</p>
-    </div>
-
-    <p class="bss-tagline">
-      Yon mouvman • Yon vizyon • Yon limyè ki pap janm etenn.
-    </p>
-
+  <div class="section">
+    <h2>Trompette</h2>
+    <ul>
+      <li>Jn Fritzner Petit Homme</li>
+      <li>Petit Frère Claudy</li>
+      <li>Francique Jean Baptiste</li>
+      <li>Jean Meguy Blanc</li>
+      <li>Alexando Civil</li>
+      <li>Yguens</li>
+    </ul>
   </div>
-</section>
+
+  <div class="section">
+    <h2>Bariton</h2>
+    <ul>
+      <li>Jean Jackson Francique</li>
+      <li>Berteau Mintyl</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Trombone</h2>
+    <ul>
+      <li>Roland Salomon</li>
+      <li>Sonel Pierre</li>
+      <li>Montis Molière</li>
+      <li>Pierre Gladoth</li>
+      <li>Billy Blaise</li>
+      <li>Julien Donaldson</li>
+      <li>Moril Jean Fritz</li>
+      <li>Jean Jery</li>
+      <li>Dallas Kervens</li>
+      <li>Jean Steedor</li>
+      <li>Jean Steeder</li>
+      <li>Jean Fritz</li>
+      <li>Alexando Civil</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Bass</h2>
+    <ul>
+      <li>Sylvestre Lindor (Didy)</li>
+      <li>Paul Georges Edouard</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Tambour</h2>
+    <ul>
+      <li>Auguste Lesmy</li>
+      <li>Jackson Bonny</li>
+      <li>Jean James</li>
+      <li>Jean Bernard St Villus</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Samba</h2>
+    <ul>
+      <li>Phedel Etienne</li>
+      <li>Felito Jacques</li>
+      <li>Micaisse Antoine</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Percussion</h2>
+    <ul>
+      <li>Louis Kenddy (Tyap)</li>
+      <li>Jn Louis J Abner (Caisse)</li>
+      <li>Wanel Philémon</li>
+      <li>Joseph Enel (ti bambou)</li>
+      <li>Fritzner Pascal (ti bambou)</li>
+      <li>Germain Evens (Colonel)</li>
+      <li>Wesnel Larose (Bambou)</li>
+      <li>Frantz Joanie (Bambou)</li>
+      <li>Edson Doidier (Bambou)</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>
+  © 2026 Briyant Soley Signo 1815 — All Rights Reserved
+</footer>
 
 </body>
 </html>
-</body>
-</html>
-<!-- Upload foto mizisyen an -->
-<div style="margin-bottom:10px;">
-  <label style="display:block; margin-bottom:4px;">Upload foto mizisyen an:</label>
-  <input id="photo-file" type="file" accept="image/*" 
-         style="padding:6px; background:#000; color:#fff; border:1px solid #333; border-radius:4px;">
-</div>
