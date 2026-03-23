@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>BSS 1815 – Admin Mizisyen</title>
+
+  <style>
+    body { font-family: system-ui, sans-serif; background:#111; color:#f5f5f5; margin:0; }
+    header {
+      padding:16px;
+      background: linear-gradient(90deg,#FF8C42,#000000);
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    header h1 { margin:0; font-size:20px; text-transform:uppercase; }
+    .badge { font-size:12px; padding:2px 8px; border-radius:999px; background:#FF8C42; color:#000; }
+    main { padding:16px; }
+
+    table { width:100%; border-collapse:collapse; margin-top:12px; font-size:14px; }
+    th, td { padding:8px; border-bottom:1px solid #333; text-align:left; }
+    th { background:#222; }
+    tr:nth-child(even) { background:#181818; }
+
+    .pill { padding:4px 10px; border-radius:999px; background:#222; font-size:12px; margin-right:6px; }
+    .section-title { margin-top:24px; font-weight:700; color:#FF8C42; text-transform:uppercase; }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Dashboard Admin – Mizisyen BSS 1815</h1>
+    <span class="badge">Sezon 2026</span>
+  </header>
+
+  <main>
+    <div>
+      <span class="pill" id="total-contracts">Kontra: …</span>
+      <span class="pill" id="total-paid">Peye: …</span>
+      <span class="pill" id="total-balance">Balans: …</span>
+    </div>
+
+    <h2 class="section-title">Tout Mizisyen</h2>
+
+    <table id="musicians-table">
+      <thead>
+        <tr>
+          <th>Non</th>
+          <th>Seksyon</th>
+          <th>Enstriman</th>
+          <th>Kontra</th>
+          <th>Peye</th>
+          <th>Balans</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </main>
+
+  <script type="module" src="./admin-dashboard.js"></script>
+</body>
+</html>
