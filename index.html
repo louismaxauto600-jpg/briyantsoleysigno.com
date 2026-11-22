@@ -259,7 +259,7 @@ footer{text-align:center;padding:40px 15px;background:#090402;font-weight:bold}
       <div class="brand">
         <img
           class="brand-logo"
-          src="./briyant-soley-signo-1815.jpg"
+          src="./bss1815-do.jpg"
           alt="Logo ofisyèl BSS1815"
           onerror="this.style.display='none';document.getElementById('logoError').style.display='block'">
         <div>
@@ -267,7 +267,7 @@ footer{text-align:center;padding:40px 15px;background:#090402;font-weight:bold}
           <p>DEVAN DEVAN NÈT™</p>
           <p>BATI POU JODI A • PARE POU DEMEN</p>
           <div id="logoError" class="media-error">
-            Logo pa jwenn: briyant-soley-signo-1815.jpg
+            Logo pa jwenn: bss1815-do.jpg
           </div>
         </div>
       </div>
@@ -299,12 +299,12 @@ footer{text-align:center;padding:40px 15px;background:#090402;font-weight:bold}
   <div class="container">
     <img
       class="hero-logo"
-      src="./briyant-soley-signo-1815.jpg"
+      src="./bss1815-do.jpg"
       alt="BSS1815 Historical Documentary"
       onerror="this.style.display='none';document.getElementById('heroLogoError').style.display='block'">
 
     <p id="heroLogoError" class="media-error">
-      Fichye logo a pa chaje: briyant-soley-signo-1815.jpg
+      Fichye logo a pa chaje: bss1815-do.jpg
     </p>
 
     <p><strong>DEPI 1815 • SIGNO • LÉOGÂNE • AYITI</strong></p>
@@ -505,8 +505,8 @@ footer{text-align:center;padding:40px 15px;background:#090402;font-weight:bold}
         controls
         playsinline
         preload="metadata"
-        poster="./briyant-soley-signo-1815.jpg">
-        <source src="./briyant-soley-signo-1815.mp4" type="video/mp4">
+        poster="./bss1815-do.jpg">
+        <source src="./prof-avatar.mp4" type="video/mp4">
         Navigatè ou a pa sipòte videyo sa a.
       </video>
 
@@ -621,8 +621,8 @@ footer{text-align:center;padding:40px 15px;background:#090402;font-weight:bold}
 ===================================================== */
 
 const CONFIG = Object.freeze({
-  logo: "briyant-soley-signo-1815.jpg",
-  avatar: "briyant-soley-signo-1815.mp4",
+  logo: "bss1815-do.jpg",
+  avatar: "prof-avatar.mp4",
   slideshowDelay: 5000
 });
 
@@ -644,7 +644,7 @@ const historicalFiles = [
 ===================================================== */
 
 const photoFiles = [
-  "briyant-soley-signo-1815.jpg",
+  "bss1815-do.jpg",
   "Leclercfélix-II.jpg",
   "konkont-doc.jpg",
   "papouche-doc.jpg",
@@ -760,4 +760,359 @@ function readableName(filename){
     .toUpperCase();
 }
 
-function
+function localPath(filename){
+  return "./" + encodeURIComponent(filename);
+}
+
+function loadImage(filename){
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => resolve({filename,img});
+    img.onerror = () => resolve(null);
+    img.src = localPath(filename);
+  });
+}
+
+/*
+  Kalkile yon ti siyati vizyèl pou detekte foto
+  ki sanble anpil. Sa pa yon verifikasyon pafè:
+  de foto diferan ki sanble kapab gen menm siyati.
+  Pou evite efase foto pa erè, nou itilize siyati
+  a sèlman pou imaj ki gen menm dimansyon.
+*/
+
+function imageSignature(img){
+  try{
+    const canvas = document.createElement("canvas");
+    canvas.width = 16;
+    canvas.height = 16;
+    const ctx = canvas.getContext("2d", {
+      willReadFrequently:true
+    });
+    ctx.drawImage(img,0,0,16,16);
+    const pixels = ctx.getImageData(0,0,16,16).data;
+    let values = [];
+    for(let i=0;i<pixels.length;i+=4){
+      const r = Math.round(pixels[i]/16);
+      const g = Math.round(pixels[i+1]/16);
+      const b = Math.round(pixels[i+2]/16);
+      values.push(r.toString(16)+g.toString(16)+b.toString(16));
+    }
+    return img.naturalWidth+"x"+img.naturalHeight+
+      ":"+values.join("");
+  }catch(e){
+    return null;
+  }
+}
+
+async function preparePhotos(){
+  galleryStatus.textContent = "AP VERIFYE FOTO YO...";
+
+  const results = await Promise.all(
+    uniqueNames.map(loadImage)
+  );
+
+  const signatures = new Set();
+  const valid = [];
+  let unavailable = 0;
+  let duplicates = 0;
+
+  for(const item of results){
+    if(!item){
+      unavailable++;
+      continue;
+    }
+
+    const signature = imageSignature(item.img);
+
+    if(signature && signatures.has(signature)){
+      duplicates++;
+      continue;
+    }
+
+    if(signature) signatures.add(signature);
+    valid.push(item.filename);
+  }
+
+  photos = valid;
+  currentSlide = 0;
+
+  renderSlide();
+  renderGallery();
+
+  galleryStatus.textContent =
+    photos.length + " FOTO DISPONIB • " +
+    duplicates + " DOUBLON DETEKTE • " +
+    unavailable + " FICHYE PA JWENN";
+
+  if(playing) startSlideshow();
+}
+
+function renderSlide(){
+  if(!photos.length){
+    slideImage.removeAttribute("src");
+    slideCaption.textContent = "PA GEN FOTO DISPONIB";
+    slideCounter.textContent = "FOTO 0 / 0";
+    return;
+  }
+
+  const filename = photos[currentSlide];
+  slideImage.src = localPath(filename);
+  slideImage.alt = readableName(filename);
+  slideCaption.textContent = readableName(filename);
+  slideCounter.textContent =
+    "FOTO " + (currentSlide+1) + " / " + photos.length;
+}
+
+function moveSlide(step){
+  if(!photos.length) return;
+  currentSlide =
+    (currentSlide+step+photos.length)%photos.length;
+  renderSlide();
+}
+
+function stopSlideshow(){
+  if(slideTimer){
+    clearInterval(slideTimer);
+    slideTimer = null;
+  }
+}
+
+function startSlideshow(){
+  stopSlideshow();
+  if(photos.length>1 && playing){
+    slideTimer = setInterval(
+      () => moveSlide(1),
+      CONFIG.slideshowDelay
+    );
+  }
+}
+
+document.getElementById("prevSlide")
+  .addEventListener("click",()=>{
+    moveSlide(-1);
+    startSlideshow();
+  });
+
+document.getElementById("nextSlide")
+  .addEventListener("click",()=>{
+    moveSlide(1);
+    startSlideshow();
+  });
+
+document.getElementById("pauseSlide")
+  .addEventListener("click",function(){
+    playing = !playing;
+    this.textContent = playing ? "⏸ PAUSE" : "▶ PLAY";
+    if(playing) startSlideshow();
+    else stopSlideshow();
+  });
+
+document.getElementById("toggleGallery")
+  .addEventListener("click",function(){
+    const open = galleryGrid.classList.toggle("open");
+    this.textContent = open ?
+      "✕ FÈMEN GALERI A" :
+      "🖼 OUVRI GALERI A";
+  });
+
+function renderGallery(){
+  galleryGrid.replaceChildren();
+
+  for(let i=0;i<photos.length;i++){
+    const filename = photos[i];
+
+    const figure = document.createElement("figure");
+    const img = document.createElement("img");
+    const caption = document.createElement("figcaption");
+
+    img.src = localPath(filename);
+    img.alt = readableName(filename);
+    img.loading = "lazy";
+
+    caption.textContent = readableName(filename);
+
+    figure.append(img,caption);
+
+    figure.addEventListener("click",()=>{
+      currentSlide = i;
+      renderSlide();
+      slideImage.scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+      });
+    });
+
+    galleryGrid.appendChild(figure);
+  }
+}
+
+/* =====================================================
+   PROF VIDEO AVATAR
+===================================================== */
+
+const profVideo = document.getElementById("profVideo");
+const videoError = document.getElementById("videoError");
+
+function showVideoError(message){
+  videoError.textContent = message;
+  videoError.style.display = "block";
+}
+
+profVideo.addEventListener("error",()=>{
+  showVideoError(
+    "Videyo a pa chaje. Verifye fichye: prof-avatar.mp4"
+  );
+});
+
+profVideo.addEventListener("loadedmetadata",()=>{
+  videoError.style.display = "none";
+});
+
+profVideo.addEventListener("stalled",()=>{
+  showVideoError(
+    "Chajman videyo a kanpe. Verifye koneksyon oswa fichye MP4 a."
+  );
+});
+
+document.getElementById("playProf")
+  .addEventListener("click",async()=>{
+    try{
+      if(profVideo.paused){
+        await profVideo.play();
+      }else{
+        profVideo.pause();
+      }
+    }catch(error){
+      showVideoError(
+        "Navigatè a pa kapab jwe prof-avatar.mp4. " +
+        "Fichye a ka pa disponib oswa kodèk videyo a pa sipòte."
+      );
+    }
+  });
+
+/* =====================================================
+   12 MODIL AI
+===================================================== */
+
+const modules = [
+  ["🎤","AI PRESENTATION","Prezantasyon dijital"],
+  ["👥","AI MEMBERS","Jesyon manm"],
+  ["🎬","AI MEDIA CENTER","Foto ak videyo"],
+  ["📄","AI DOCUMENTS","Dokiman dijital"],
+  ["📋","AI REGISTRY","Rejis dijital"],
+  ["🎙","AI VOICE SCRIPT","Narasyon ak anons"],
+  ["📱","AI SOCIAL MEDIA","Rezo sosyal"],
+  ["🎨","AI FLYER CREATOR","Kreyasyon afich"],
+  ["📅","AI EVENTS","Jesyon evènman"],
+  ["📡","AI BROADCAST","Difizyon"],
+  ["💼","AI BUSINESS SUPPORT","Sipò biznis"],
+  ["🤝","AI COMMUNITY SUPPORT","Sipò kominotè"]
+];
+
+const aiModules = document.getElementById("aiModules");
+
+for(const [symbol,title,description] of modules){
+  const card = document.createElement("article");
+  card.className = "card module";
+
+  const icon = document.createElement("div");
+  icon.className = "symbol";
+  icon.textContent = symbol;
+
+  const heading = document.createElement("h3");
+  heading.textContent = title;
+
+  const paragraph = document.createElement("p");
+  paragraph.textContent = description;
+
+  card.append(icon,heading,paragraph);
+  aiModules.appendChild(card);
+}
+
+/* =====================================================
+   10 REZO SOSYAL
+===================================================== */
+
+const socials = [
+  ["【entity-Facebook¦canonical_name=Facebook】","f","https://www.facebook.com/share/1By3KvYRrM/"],
+  ["WhatsApp","☎","https://wa.me/50943437488"],
+  ["TikTok","♪","https://www.tiktok.com/@maximax1960"],
+  ["Instagram","◎","https://www.instagram.com/lebaron072/"],
+  ["Telegram","✈","https://t.me/bss1815dmp"],
+  ["YouTube","▶","https://www.youtube.com/@BSS1815PROMAXDMP"],
+  ["Spotify","♫","https://open.spotify.com/user/31tjmtdar45qgcpjpiwps5rqrici"],
+  ["X / Twitter","𝕏","https://x.com/w05g2m"],
+  ["Truth Social","T","https://truthsocial.com/@briyant_soley_1815"],
+  ["LinkedIn","in","https://www.linkedin.com/in/maximax-multi-services-075ba2314"]
+];
+
+const socialLinks = document.getElementById("socialLinks");
+
+for(const [name,symbol,url] of socials){
+  const a = document.createElement("a");
+  a.className = "social";
+  a.href = url;
+  a.target = "_blank";
+  a.rel = "noopener noreferrer";
+
+  const icon = document.createElement("span");
+  icon.textContent = symbol;
+
+  const label = document.createElement("div");
+  label.textContent = name;
+
+  a.append(icon,label);
+  socialLinks.appendChild(a);
+}
+
+/* =====================================================
+   LANGUAGES — ENG / KRE / FRAN
+===================================================== */
+
+const translations = {
+  ht:{
+    heroDescription:
+      "Yon patrimwàn ki travèse jenerasyon. Yon istwa ki merite respè. Yon kominote ki kontinye bati avni li."
+  },
+  en:{
+    heroDescription:
+      "A heritage spanning generations. A history worthy of respect. A community continuing to build its future."
+  },
+  fr:{
+    heroDescription:
+      "Un patrimoine qui traverse les générations. Une histoire qui mérite le respect. Une communauté qui continue de bâtir son avenir."
+  }
+};
+
+document.querySelectorAll("[data-lang]")
+  .forEach(button=>{
+    button.addEventListener("click",()=>{
+      const lang = button.dataset.lang;
+
+      document.documentElement.lang = lang;
+
+      document.querySelectorAll("[data-lang]")
+        .forEach(b=>b.classList.remove("active"));
+
+      button.classList.add("active");
+
+      document.querySelectorAll("[data-i18n]")
+        .forEach(element=>{
+          const key = element.dataset.i18n;
+          if(translations[lang]?.[key]){
+            element.textContent = translations[lang][key];
+          }
+        });
+    });
+  });
+
+/* =====================================================
+   DEMARAJ
+===================================================== */
+
+preparePhotos();
+
+</script>
+</body>
+</html>
